@@ -1,0 +1,16 @@
+# ==============================================================================
+# PetSewa — Enterprise Code Owners Configuration
+# Organization: PetSewa-India
+# ==============================================================================
+
+# Global Repository Leads
+* @PetSewa-India/core-team
+
+# Backend Services (NestJS Core Engine & Database)
+/petsewa-backend/ @PetSewa-India/backend-team
+
+# Mobile Application (Flutter iOS, Android & Web)
+/petsewa_app/ @PetSewa-India/mobile-team
+
+# CI/CD Workflows & Infrastructure
+/.github/ @PetSewa-India/devops-team
