@@ -1,16 +1,17 @@
 # ==============================================================================
-# PetSewa — Enterprise Code Owners Configuration
+# PetSewa — Enterprise Code Ownership & Review Policy
 # Organization: PetSewa-India
 # ==============================================================================
 
-# Global Repository Leads
-* @PetSewa-India/core-team
+# Core Admin Reviewers (Petsewa Core Team)
+# All pull requests across the entire codebase require approval from Petsewa Core
+* @PetSewa-India/petsewa-core
 
-# Backend Services (NestJS Core Engine & Database)
-/petsewa-backend/ @PetSewa-India/backend-team
+# Backend Engine Modules (NestJS + TypeORM + Database)
+/petsewa-backend/ @PetSewa-India/petsewa-core
 
-# Mobile Application (Flutter iOS, Android & Web)
-/petsewa_app/ @PetSewa-India/mobile-team
+# Mobile Applications (Flutter Customer & Vendor Apps)
+/petsewa_app/ @PetSewa-India/petsewa-core
 
-# CI/CD Workflows & Infrastructure
-/.github/ @PetSewa-India/devops-team
+# CI/CD Workflows & Repository Infrastructure
+/.github/ @PetSewa-India/petsewa-core
