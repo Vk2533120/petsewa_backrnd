@@ -400,5 +400,6 @@ This project follows strict software engineering practices:
 
 ## 📄 License & Attribution
 
-Designed and developed by **Pearl Organisation™** for the **PetSewa Platform**.  
-All rights reserved. Unlicensed software; unauthorized copying or distribution is strictly prohibited.
+Designed and developed for the **PetSewa Platform** by **PetSewa-India**.  
+All rights reserved. Proprietary commercial software; unauthorized copying or distribution is strictly prohibited.
+
