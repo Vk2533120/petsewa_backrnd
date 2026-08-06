@@ -1,0 +1,68 @@
+# ==============================================================================
+# PetSewa — Automated PR & Issue Reviewer Assignment System
+# Organization: PetSewa-India
+# ==============================================================================
+
+name: Auto Assign Reviewers & Triage
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Auto-assign Pull Request Reviewers from Petsewa Core Team
+  # ---------------------------------------------------------------------------
+  auto-assign-pr:
+    name: Auto Request Review from Core Team
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request Review from Petsewa Core Team
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = github.context.issue;
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner,
+                repo,
+                pull_number: number,
+                team_reviewers: ['petsewa-core']
+              });
+              console.log('Successfully requested PR review from petsewa-core team!');
+            } catch (error) {
+              console.log('PR Auto-assign log:', error.message);
+            }
+
+  # ---------------------------------------------------------------------------
+  # 2. Auto-label & Triage New Issues & Proposals
+  # ---------------------------------------------------------------------------
+  auto-triage-issue:
+    name: Auto Triage & Assign Issues/Proposals
+    if: github.event_name == 'issues'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add Triage Labels & Core Assignment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = github.context.issue;
+            try {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: number,
+                labels: ['triage', 'needs-review']
+              });
+              console.log('Successfully added triage labels for Petsewa Core review!');
+            } catch (error) {
+              console.log('Issue Triage log:', error.message);
+            }
