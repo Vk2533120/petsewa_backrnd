@@ -11,6 +11,7 @@ import { SocialModule } from './modules/social/social.module';
 import { RewardsModule } from './modules/rewards/rewards.module';
 import { EmergencyModule } from './modules/emergency/emergency.module';
 import { EcommerceModule } from './modules/ecommerce/ecommerce.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -46,7 +47,9 @@ import { EcommerceModule } from './modules/ecommerce/ecommerce.module';
     RewardsModule,
     EmergencyModule,
     EcommerceModule,
+    NotificationsModule,
   ],
+
   controllers: [],
   providers: [],
 })

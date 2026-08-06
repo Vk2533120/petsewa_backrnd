@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Vendor } from './entities/vendor.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class VendorsService {
   ) {}
 
   async create(createVendorDto: any): Promise<Vendor> {
-    const newVendor = this.vendorRepository.create(createVendorDto);
+    const newVendor = this.vendorRepository.create(createVendorDto as DeepPartial<Vendor>);
     return this.vendorRepository.save(newVendor);
   }
+
 
   async findAll(): Promise<Vendor[]> {
     return this.vendorRepository.find({ where: { isActive: true } });

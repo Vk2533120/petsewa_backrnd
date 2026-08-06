@@ -705,20 +705,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                   route: '/lost-found',
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _buildExploreCard(
-                  title: 'NGO Hub',
-                  subtitle: 'Support & Adopt 💚',
-                  icon: Icons.volunteer_activism_rounded,
-                  color: AppColors.accentBlue,
-                  route: '/ngo-hub',
-                ),
-              ),
               const SizedBox(width: 12),
               Expanded(
                 child: _buildExploreCard(
@@ -735,7 +721,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       ),
     );
   }
-
 
   Widget _buildExploreCard({
     required String title,

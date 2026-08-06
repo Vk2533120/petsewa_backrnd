@@ -1,0 +1,33 @@
+# Dependencies & Node Modules
+**/node_modules/
+**/.pnp
+**/.pnp.js
+
+# Build Outputs
+**/dist/
+**/build/
+**/.dart_tool/
+**/.pub-cache/
+**/.pub/
+
+# Environment & Credentials
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# IDE & System Files
+**/.DS_Store
+**/Thumbs.db
+**/.vscode/
+**/.idea/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# Flutter & Dart dependencies
+**/flutter_service_worker.js
+**/.flutter-plugins
+**/.flutter-plugins-dependencies

@@ -111,6 +111,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTap: () => Navigator.pushNamed(context, '/wallet'),
             ),
             _buildOptionTile(
+              icon: Icons.card_giftcard_rounded,
+              iconColor: AppColors.secondary,
+              title: 'Refer Friends & Earn Rewards',
+              subtitle: 'Get +100 Pet Points per referral',
+              onTap: () => Navigator.pushNamed(context, '/referral'),
+            ),
+            _buildOptionTile(
               icon: Icons.shopping_bag_rounded,
               iconColor: AppColors.primaryDark,
               title: 'Cart & Orders History',
@@ -119,6 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             const SizedBox(height: 20),
+
 
             // Logout Button
             SizedBox(

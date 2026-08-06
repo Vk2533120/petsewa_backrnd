@@ -26,6 +26,7 @@ import 'screens/adoption_screen.dart';
 import 'screens/lost_found_screen.dart';
 import 'screens/emergency_screen.dart';
 import 'screens/wallet_screen.dart';
+import 'screens/referral_screen.dart';
 import 'screens/notifications_screen.dart';
 // Provider Screens
 import 'screens/provider_service_select_screen.dart';
@@ -33,16 +34,6 @@ import 'screens/provider_register_screen.dart';
 import 'screens/provider_verification_screen.dart';
 import 'screens/provider_pending_screen.dart';
 import 'screens/provider_home_screen.dart';
-// NGO Screens
-import 'screens/ngo_registration_screen.dart';
-import 'screens/ngo_pending_screen.dart';
-import 'screens/ngo_login_screen.dart';
-import 'screens/ngo_dashboard_screen.dart';
-import 'screens/ngo_add_pet_screen.dart';
-import 'screens/ngo_hub_screen.dart';
-import 'screens/ngo_detail_screen.dart';
-import 'screens/adoption_request_screen.dart';
-import 'screens/my_adoption_requests_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -182,6 +173,7 @@ class PetSewaApp extends StatelessWidget {
         '/lost-found': (context) => const LostFoundScreen(),
         '/emergency': (context) => const EmergencyScreen(),
         '/wallet': (context) => const WalletScreen(),
+        '/referral': (context) => const ReferralScreen(),
         '/notifications': (context) => const NotificationsScreen(),
         // Provider Routes
         '/provider-service-select': (context) => const ProviderServiceSelectScreen(),
@@ -189,13 +181,6 @@ class PetSewaApp extends StatelessWidget {
         '/provider-verification': (context) => const ProviderVerificationScreen(),
         '/provider-pending': (context) => const ProviderPendingScreen(),
         '/provider-home': (context) => const ProviderHomeScreen(),
-        // NGO Routes
-        '/ngo-register': (context) => const NgoRegistrationScreen(),
-        '/ngo-pending': (context) => const NgoPendingScreen(),
-        '/ngo-login': (context) => const NgoLoginScreen(),
-        '/ngo-dashboard': (context) => const NgoDashboardScreen(),
-        '/ngo-hub': (context) => const NgoHubScreen(),
-        '/my-adoption-requests': (context) => const MyAdoptionRequestsScreen(),
       },
     );
   }

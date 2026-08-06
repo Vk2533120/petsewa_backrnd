@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Product } from './entities/product.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class EcommerceService {
   ) {}
 
   async addProduct(dto: any): Promise<Product> {
-    const product = this.productRepository.create(dto);
+    const product = this.productRepository.create(dto as DeepPartial<Product>);
     return this.productRepository.save(product);
   }
+
 
   async getProducts(): Promise<Product[]> {
     return this.productRepository.find({ where: { isActive: true } });

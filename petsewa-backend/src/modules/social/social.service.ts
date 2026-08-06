@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Post } from './entities/post.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class SocialService {
   ) {}
 
   async createPost(dto: any): Promise<Post> {
-    const post = this.postRepository.create(dto);
+    const post = this.postRepository.create(dto as DeepPartial<Post>);
     return this.postRepository.save(post);
   }
+
 
   async findReels(): Promise<Post[]> {
     return this.postRepository.find({ where: { type: 'reel' }, order: { createdAt: 'DESC' } });

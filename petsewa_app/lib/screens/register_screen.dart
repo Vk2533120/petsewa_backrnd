@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/reward_service.dart';
 import 'otp_screen.dart';
-
 import '../utils/validators.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,7 +16,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _referralCodeController = TextEditingController();
   final _authService = AuthService();
+  final _rewardService = RewardService();
+
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
@@ -28,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _referralCodeController.dispose();
     super.dispose();
   }
 
@@ -64,6 +68,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _nameController.text,
         isProvider: false,
       );
+
+      // Apply referral code if provided
+      final refCode = _referralCodeController.text.trim();
+      if (refCode.isNotEmpty) {
+        await _rewardService.applyReferralCode(refCode);
+      }
 
       if (mounted) {
         if (response.session != null) {
@@ -179,6 +189,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 obscure: _obscureConfirm,
                 toggle: () => setState(() => _obscureConfirm = !_obscureConfirm),
               ),
+              const SizedBox(height: 16),
+
+              // Optional Referral Code
+              _buildTextField(
+                controller: _referralCodeController,
+                label: 'Referral Code (Optional)',
+                icon: Icons.card_giftcard_outlined,
+                capitalization: TextCapitalization.characters,
+              ),
               const SizedBox(height: 32),
 
               // Register Button
@@ -248,10 +267,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required String label,
     required IconData icon,
     TextInputType keyboard = TextInputType.text,
+    TextCapitalization capitalization = TextCapitalization.none,
   }) {
     return TextField(
       controller: controller,
       keyboardType: keyboard,
+      textCapitalization: capitalization,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon, color: const Color(0xFF354024)),

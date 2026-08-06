@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Emergency } from './entities/emergency.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class EmergencyService {
   ) {}
 
   async createSOS(dto: any): Promise<Emergency> {
-    const sos = this.emergencyRepository.create(dto);
+    const sos = this.emergencyRepository.create(dto as DeepPartial<Emergency>);
     return this.emergencyRepository.save(sos);
   }
+
 
   async getActiveEmergencies(): Promise<Emergency[]> {
     return this.emergencyRepository.find({ where: { status: 'Active' } });

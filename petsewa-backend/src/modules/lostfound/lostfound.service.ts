@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { LostFound } from './entities/lostfound.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class LostFoundService {
   ) {}
 
   async create(dto: any): Promise<LostFound> {
-    const report = this.lostFoundRepository.create(dto);
+    const report = this.lostFoundRepository.create(dto as DeepPartial<LostFound>);
     return this.lostFoundRepository.save(report);
   }
+
 
   async findAll(): Promise<LostFound[]> {
     return this.lostFoundRepository.find({ where: { status: 'Open' } });

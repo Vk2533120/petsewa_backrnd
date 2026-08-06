@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { Booking } from './entities/booking.entity';
 
 @Injectable()
@@ -11,9 +11,10 @@ export class BookingsService {
   ) {}
 
   async createBooking(createBookingDto: any): Promise<Booking> {
-    const newBooking = this.bookingRepository.create(createBookingDto);
+    const newBooking = this.bookingRepository.create(createBookingDto as DeepPartial<Booking>);
     return this.bookingRepository.save(newBooking);
   }
+
 
   async getBookingsByUser(userId: number): Promise<Booking[]> {
     return this.bookingRepository.find({ where: { userId } });
