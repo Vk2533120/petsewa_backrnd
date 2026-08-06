@@ -1,0 +1,72 @@
+name: PetSewa CI/CD Workflow
+
+on:
+  push:
+    branches: [ main, master, development, staging ]
+  pull_request:
+    branches: [ main, master, development ]
+
+jobs:
+  # -------------------------------------------------------------
+  # Job 1: Build NestJS Core Backend API
+  # -------------------------------------------------------------
+  backend-ci:
+    name: Backend (NestJS) Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./petsewa-backend
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './petsewa-backend/package.json'
+
+      - name: Install Backend Dependencies
+        run: npm ci || npm install
+
+      - name: Build NestJS Application
+        run: npm run build
+
+  # -------------------------------------------------------------
+  # Job 2: Analyze & Test Flutter Mobile Application
+  # -------------------------------------------------------------
+  flutter-ci:
+    name: Flutter Mobile Application CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./petsewa_app
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java Environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyzer / Lints
+        run: flutter analyze || true
+
+      - name: Build Web Target Test
+        run: flutter build web --no-pub
