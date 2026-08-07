@@ -12,27 +12,28 @@ PetSewa utilizes an enterprise-grade modular architecture designed for high scal
 
 ```mermaid
 flowchart TD
-    %% Layer 1: Client
-    subgraph ClientLayer["📱 Client & Application Layer"]
-        App["📱 Flutter Mobile App (Customer & Vendor)"]
+    %% Tier 1: Client & Applications
+    subgraph Tier1["📱 Client & Application Layer"]
+        direction LR
+        App["📱 Flutter Mobile App<br/>(Customer & Vendor)"]
         Web["💻 Flutter Web & Admin Portal"]
     end
 
-    %% Layer 2: Gateway
-    subgraph GatewayLayer["🌐 Infrastructure & Gateway Layer"]
-        Gateway["🛡️ Nginx API Gateway & Reverse Proxy"]
+    %% Tier 2: API Gateway
+    subgraph Tier2["🌐 API Gateway & Reverse Proxy"]
+        Nginx["🛡️ Nginx Gateway / Load Balancer"]
     end
 
-    %% Layer 3: Backend Core Engine
-    subgraph BackendLayer["⚡ NestJS Core Backend Engine"]
-        direction TB
-        subgraph CoreServices["Business & Transaction Modules"]
-            Auth["🔐 Auth & RBAC Module"]
+    %% Tier 3: NestJS Core Engine
+    subgraph Tier3["⚡ NestJS Core Backend Engine"]
+        direction LR
+        subgraph CoreGroup["Business & Core Domains"]
+            Auth["🔐 Auth & RBAC"]
             Booking["📅 Booking Management"]
-            Ecom["🛒 E-Commerce Engine"]
+            Ecom["🛒 E-Commerce Shop"]
             Emergency["🚨 Emergency SOS & Vets"]
         end
-        subgraph PlatformServices["Ecosystem & Community Modules"]
+        subgraph EcoGroup["Ecosystem & Community"]
             Adoption["🐾 Adoption & Lost/Found"]
             NGO["🏢 NGO Hub & Verification"]
             Rewards["🎁 Rewards & Referral"]
@@ -40,27 +41,25 @@ flowchart TD
         end
     end
 
-    %% Layer 4: Storage & Cloud Services
-    subgraph DataLayer["💾 Database, Cache & Cloud Services"]
-        PG[("🐘 PostgreSQL Database")]
-        Redis[("⚡ Redis Cache & OTP")]
-        Socket["🔄 Socket.io Realtime Hub"]
-        R2["☁️ Cloudflare R2 Media"]
-        FCM["📲 Firebase Push (FCM)"]
+    %% Tier 4: Database & Cloud Infrastructure
+    subgraph Tier4["💾 Database, Cache & Cloud Infrastructure"]
+        direction LR
+        subgraph DBBox["Data & Caching"]
+            PG[("🐘 PostgreSQL DB")]
+            Redis[("⚡ Redis Cache & OTP")]
+        end
+        subgraph CloudBox["Cloud & Real-Time Hub"]
+            Socket["🔄 Socket.io Real-Time Hub"]
+            R2["☁️ Cloudflare R2 Media"]
+            FCM["📲 Firebase Push (FCM)"]
+        end
     end
 
     %% Clean Top-Down Wiring
-    App -->|REST / WebSocket| Gateway
-    Web -->|HTTPS API| Gateway
-    Gateway --> CoreServices
-    Gateway --> PlatformServices
-
-    CoreServices --> PG
-    CoreServices --> Redis
-    PlatformServices --> PG
-    PlatformServices --> Socket
-    PlatformServices --> R2
-    PlatformServices --> FCM
+    Tier1 -->|HTTPS / WSS| Tier2
+    Tier2 -->|Internal API Routing| Tier3
+    CoreGroup -->|TypeORM & Cache| DBBox
+    EcoGroup -->|Storage & Alerts| CloudBox
 ```
 
 ### Hyperlocal Location & Service Flow
