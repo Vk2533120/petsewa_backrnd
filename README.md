@@ -11,55 +11,56 @@ PetSewa utilizes an enterprise-grade modular architecture designed for high scal
 ### System Architecture Diagram
 
 ```mermaid
-graph TD
-    %% Subgraphs for Organization
-    subgraph Client_Channels["📱 Client & User Interfaces"]
-        App["Flutter Mobile App<br/>(iOS & Android)"]
-        Web["Next.js Web Portal<br/>(E-Commerce / Vendor)"]
+flowchart TD
+    %% Layer 1: Client
+    subgraph ClientLayer["📱 Client & Application Layer"]
+        App["📱 Flutter Mobile App (Customer & Vendor)"]
+        Web["💻 Flutter Web & Admin Portal"]
     end
 
-    subgraph Infrastructure_Layer["🌐 Infrastructure Layer"]
-        Gateway["Nginx API Gateway / Load Balancer"]
+    %% Layer 2: Gateway
+    subgraph GatewayLayer["🌐 Infrastructure & Gateway Layer"]
+        Gateway["🛡️ Nginx API Gateway & Reverse Proxy"]
     end
 
-    subgraph Core_Backend["⚡ NestJS Core Backend Engine"]
-        Auth["Auth & RBAC Module"]
-        Booking["Booking Management"]
-        Ecom["Ecommerce Engine"]
-        Emergency["Emergency SOS & Vet Connect"]
-        Adoption["Adoption & Lost/Found"]
-        NGO["NGO Platform Engine ✅"]
-        Rewards["Rewards & Gamification"]
-        Social["Social & Reels Engine"]
+    %% Layer 3: Backend Core Engine
+    subgraph BackendLayer["⚡ NestJS Core Backend Engine"]
+        direction TB
+        subgraph CoreServices["Business & Transaction Modules"]
+            Auth["🔐 Auth & RBAC Module"]
+            Booking["📅 Booking Management"]
+            Ecom["🛒 E-Commerce Engine"]
+            Emergency["🚨 Emergency SOS & Vets"]
+        end
+        subgraph PlatformServices["Ecosystem & Community Modules"]
+            Adoption["🐾 Adoption & Lost/Found"]
+            NGO["🏢 NGO Hub & Verification"]
+            Rewards["🎁 Rewards & Referral"]
+            Notif["🔔 Real-Time Notifications"]
+        end
     end
 
-    subgraph Data_Realtime["💾 Database, Cache & Realtime Services"]
-        PG[("PostgreSQL<br/>Primary Database")]
-        Redis[("Redis<br/>Cache, OTP & Queues")]
-        Socket["Socket.io<br/>Realtime Event Hub"]
-        R2["Cloudflare R2<br/>Media & Assets Storage"]
-        FCM["Firebase Cloud Messaging<br/>Push Notifications"]
+    %% Layer 4: Storage & Cloud Services
+    subgraph DataLayer["💾 Database, Cache & Cloud Services"]
+        PG[("🐘 PostgreSQL Database")]
+        Redis[("⚡ Redis Cache & OTP")]
+        Socket["🔄 Socket.io Realtime Hub"]
+        R2["☁️ Cloudflare R2 Media"]
+        FCM["📲 Firebase Push (FCM)"]
     end
 
-    %% Flow Connections
-    App --> Gateway
-    Web --> Gateway
-    Gateway --> Core_Backend
+    %% Clean Top-Down Wiring
+    App -->|REST / WebSocket| Gateway
+    Web -->|HTTPS API| Gateway
+    Gateway --> CoreServices
+    Gateway --> PlatformServices
 
-    Core_Backend --> Auth
-    Core_Backend --> Booking
-    Core_Backend --> Ecom
-    Core_Backend --> Emergency
-    Core_Backend --> Adoption
-    Core_Backend --> NGO
-    Core_Backend --> Rewards
-    Core_Backend --> Social
-
-    Core_Backend --> PG
-    Core_Backend --> Redis
-    Core_Backend --> Socket
-    Core_Backend --> R2
-    Core_Backend --> FCM
+    CoreServices --> PG
+    CoreServices --> Redis
+    PlatformServices --> PG
+    PlatformServices --> Socket
+    PlatformServices --> R2
+    PlatformServices --> FCM
 ```
 
 ### Hyperlocal Location & Service Flow
