@@ -16,8 +16,9 @@ The PetSewa engineering team takes the security of user data, payment transactio
 If you discover a security vulnerability within the PetSewa platform (NestJS backend, Flutter app, or cloud integrations), please follow these guidelines:
 
 1. **Do NOT open a public GitHub issue** for security vulnerabilities.
-2. Email your findings directly to **security@petsewa.in** (or contact the repository administrators).
+2. Contact the **PetSewa-India** repository administrators directly.
 3. Include details of the vulnerability:
+
    - Affected service/module (e.g. Auth, Booking, Payment, Notifications)
    - Step-by-step reproduction steps
    - Potential impact
