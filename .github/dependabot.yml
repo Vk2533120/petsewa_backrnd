@@ -1,0 +1,36 @@
+# ==============================================================================
+# Dependabot Automated Security & Reviewer Configuration
+# Organization: PetSewa-India
+# ==============================================================================
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/petsewa-backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "pathakaanya12"
+      - "Hammaduddin561"
+      - "Janvi1bhardwaj"
+      - "bhumika-1320"
+    labels:
+      - "dependencies"
+      - "security"
+      - "triage"
+
+  - package-ecosystem: "pub"
+    directory: "/petsewa_app"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "pathakaanya12"
+      - "Hammaduddin561"
+      - "Janvi1bhardwaj"
+      - "bhumika-1320"
+    labels:
+      - "dependencies"
+      - "flutter"
+      - "triage"

@@ -3,15 +3,15 @@
 # Organization: PetSewa-India
 # ==============================================================================
 
-# Core Admin Reviewers (Petsewa Core Team)
-# All pull requests across the entire codebase require approval from Petsewa Core
-* @PetSewa-India/petsewa-core
+# Core Admin Reviewers
+# All pull requests across the entire codebase require approval from Core Reviewers
+* @PetSewa-India/petsewa-core @pathakaanya12 @Hammaduddin561 @Janvi1bhardwaj @bhumika-1320
 
 # Backend Engine Modules (NestJS + TypeORM + Database)
-/petsewa-backend/ @PetSewa-India/petsewa-core
+/petsewa-backend/ @PetSewa-India/petsewa-core @pathakaanya12 @Hammaduddin561
 
 # Mobile Applications (Flutter Customer & Vendor Apps)
-/petsewa_app/ @PetSewa-India/petsewa-core
+/petsewa_app/ @PetSewa-India/petsewa-core @pathakaanya12 @Hammaduddin561
 
 # CI/CD Workflows & Repository Infrastructure
-/.github/ @PetSewa-India/petsewa-core
+/.github/ @PetSewa-India/petsewa-core @pathakaanya12 @Hammaduddin561
