@@ -13,8 +13,8 @@ updates:
     reviewers:
       - "pathakaanya12"
       - "Hammaduddin561"
-      - "Janvi1bhardwaj"
-      - "bhumika-1320"
+      - "YantrikMinds"
+      - "petsewa"
     labels:
       - "dependencies"
       - "security"
@@ -28,8 +28,8 @@ updates:
     reviewers:
       - "pathakaanya12"
       - "Hammaduddin561"
-      - "Janvi1bhardwaj"
-      - "bhumika-1320"
+      - "YantrikMinds"
+      - "petsewa"
     labels:
       - "dependencies"
       - "flutter"

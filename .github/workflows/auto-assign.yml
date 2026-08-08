@@ -36,10 +36,10 @@ jobs:
             const pull_number = context.payload.pull_request.number;
             const author = context.payload.pull_request.user.login;
 
-            // List of Core Reviewers to assign
-            const coreReviewers = ['pathakaanya12', 'Hammaduddin561', 'Janvi1bhardwaj', 'bhumika-1320'];
+            // Exact 4 Core Team Reviewers
+            const coreReviewers = ['pathakaanya12', 'Hammaduddin561', 'YantrikMinds', 'petsewa'];
             
-            // Filter out the PR author so GitHub API does not reject self-review request
+            // Filter out the PR author (GitHub rejects requesting review from the creator of the PR)
             const assignedReviewers = coreReviewers.filter(u => u.toLowerCase() !== author.toLowerCase());
 
             try {
@@ -53,7 +53,6 @@ jobs:
               console.log('Successfully assigned core reviewers:', assignedReviewers);
             } catch (error) {
               console.log('Notice requesting reviewers:', error.message);
-              // Fallback to individual user requests if team permission fails
               try {
                 await github.rest.pulls.requestReviewers({
                   owner,
