@@ -1,8 +1,8 @@
 # PetSewa Ecosystem Platform — Gap Analysis and Engineering Status
 
-Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
+Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf` (Pages 13, 14–15, 18–19)
 
-This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It tracks completed platform milestones and maps all active work streams to their official GitHub tracking tasks.
+This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It documents existing foundational implementations and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
 
 ---
 
@@ -10,44 +10,55 @@ This document outlines the current engineering status versus the full technical 
 
 | Component | Architecture Stack | Current Status | Master Issue |
 |---|---|---|---|
-| **Backend & Core API Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Framework modernized to NestJS 11 (0 vulnerabilities, clean build). Core domain entities, real-time gateway, and business logic under active implementation. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
-| **Cross-Platform Mobile App** | Flutter 3.x, Dart, Supabase | Initial auth, basic discovery, booking, and shop screens present. Specialized vendor tools, social feed, reels, and live SOS under active development. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
-| **Web Ecosystem & Admin CMS** | Next.js, React, Tailwind, Laravel Admin | Architectural specifications finalized for public marketing, web store, adoption/lost-and-found portals, and operational admin CMS. | [Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40) |
+| **Backend & Core API Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO exist; advancing to complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
+| **Cross-Platform Mobile App** | Flutter 3.x, Dart, Supabase | Baseline screens for auth, booking, shop, NGO hub, referral, and wallet implemented. Advancing with specialized provider tools, social feed, reels, recurring NGO donations, gamification animations, and real-time Socket.io chat/SOS. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Web Ecosystem & Admin CMS** | Next.js, React, Tailwind, Laravel Admin | Architectural specifications finalized for public marketing, web store, adoption/lost-and-found portals, NGO transparency showcases, and operational admin CMS. | [Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40) |
 
 ---
 
-## 2. Completed Milestones
+## 2. Completed Milestones & Existing Code Foundation
 
-- [x] **Framework Security & Modernization**: Backend upgraded to NestJS 11 with 0 security vulnerabilities across all production and development dependencies (`npm run build` passing).
-- [x] **Flutter Core Dependencies**: Updated Flutter mobile dependencies (`supabase_flutter v2.17.1`, `flutter_lints v6.0.0`).
-- [x] **Repository Governance**: Organization profile, branch protections, CI automated build pipelines, and CODEOWNERS configured on `PetSewa-India`.
-- [x] **Issue & Proposal Workflow**: Standardized Bug Report and Feature/Architecture Proposal templates configured in `.github/ISSUE_TEMPLATE/`.
-- [x] **Automated Reviewer Distribution**: GitHub Action configured to randomly assign core team members as reviewers on pull requests.
+- [x] **Framework Security & Modernization**: Backend upgraded to NestJS 11 with 0 security vulnerabilities (`npm run build` passing).
+- [x] **Rewards & Gamification Foundation**: Implemented `RewardsService` with 4-tier level progression (*Bronze, Silver, Gold, Platinum*), streak-based daily check-ins, referral code generation (`PET-<id>-<random>`), point award logic, and voucher redemption.
+- [x] **NGO & Fundraising Foundation**: Implemented `NgoService` with campaign creation, active campaign retrieval, and donation accumulation logic.
+- [x] **Flutter Core Screens**: Implemented `ngo_hub_screen.dart`, `ngo_detail_screen.dart`, `ngo_dashboard_screen.dart`, `referral_screen.dart`, and `wallet_screen.dart`.
+- [x] **Repository Governance & CI**: Automated CI build pipeline, CODEOWNERS, and Feature/Architecture Proposal workflow active.
 
 ---
 
-## 3. Active Work Streams & Group Breakdown
+## 3. Advanced Engineering Work Streams
 
 ### Group 1: Backend and Infrastructure Engineering
 **Tracking Issue**: [GitHub Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38)  
-**Primary Reference**: PDF Pages 2–4, 8–11, 13–14, 16–19
+**Primary Reference**: PDF Pages 2–4, 8–11, 13–15, 16–19
 
-- [ ] **Database & TypeORM Schemas**:
+- [ ] **Advanced Database & TypeORM Schema Layer**:
   - `User`, `Vendor`, `UserAddress`, `RefreshToken`, `Role` (RBAC)
   - `Pet`, `MedicalRecord`, `VaccinationRecord`
   - `Service`, `Booking`, `BookingTracking`
   - `Product`, `Order`, `OrderItem`, `InventoryLog`, `Wishlist`, `RefundRequest`
   - `Post`, `Reel`, `Comment`, `Like`, `Share`, `Save`, `Community`, `Discussion`, `Poll`, `Event`
-  - Spatial GIST and composite B-Tree database indexing with TypeORM migrations.
+  - **NGO Entities**: `NGO`, `NGOCampaign`, `NGODonation`, `FundUtilizationReport`, `NGOVerificationDocument`
+  - **Gamification Entities**: `UserRewards`, `PetPointsLedger`, `Badge`, `UserBadge`, `TierLevel`, `ReferralCode`, `ReferralLog`, `Leaderboard`
+  - Spatial GIST and composite B-Tree indexing with TypeORM migrations.
+- [ ] **Advanced NGO & Fundraising Engine (`/api/v1/ngo`)**:
+  - Automated 80G Tax Exemption Certificate PDF Generator (with donor PAN, unique certificate number, and verification QR code).
+  - Fund utilization transparency ledger (uploading veterinary medical bills, medicine invoices, and recovery photo evidence).
+  - Recurring monthly micro-donation subscription engine (₹99/mo, ₹299/mo shelter food support).
+- [ ] **Advanced Rewards, Referral & Gamification System (`/api/v1/rewards`)**:
+  - Multi-tier gamification leaderboards (Global, City-level, and Breed Community leaderboards with weekly reward resets).
+  - Milestone achievement badges engine with unlock triggers (e.g. *Rescue Champion, Frequent Parent, Top Reviewer*).
+  - Fraud-resistant referral tracking (device fingerprinting and IP validation).
+  - Point redemption marketplace API (converting Pet Points into service discounts, grooming vouchers, or donation sponsorships).
 - [ ] **Core Domain REST APIs**:
   - Authentication (JWT, Redis OTP, `@Roles()` guard)
-  - User and vendor profile management, KYC submission
+  - User and vendor profile management, KYC document review
   - Pet medical history, clinical notes, and digital prescriptions
   - Service catalog, appointment booking state machine, and status transitions
   - E-Commerce product catalog, cart, checkout, order tracking, and returns
 - [ ] **Social Media, Reels & Community APIs**:
   - Posts publishing, nested comments, likes, shares, saves, and hashtag discovery
-  - Feed generation algorithms (Following, Trending velocity formula, Nearby geolocation, Recommended)
+  - Velocity-based trending feed algorithm, geolocation-nearby feed, and species-recommended feed
   - Short-video Reels infinite-scroll stream API and deduplicated view counter
   - Community groups, discussion threads, multi-option polls, and pet meetup events
 - [ ] **Real-time WebSockets (Socket.io)**:
@@ -70,6 +81,18 @@ This document outlines the current engineering status versus the full technical 
 **Tracking Issue**: [GitHub Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39)  
 **Primary Reference**: PDF Pages 2, 3, 8–9, 11, 13–16
 
+- [ ] **Advanced NGO & Fundraising Hub**:
+  - Interactive campaign progress bars with real-time donor feed.
+  - One-tap donation checkout supporting UPI, Cards, and Net Banking.
+  - Transparent fund utilization gallery (before/after rescue photos and medical invoices).
+  - 80G tax receipt instant PDF download UI.
+  - Recurring monthly shelter support pledge manager.
+- [ ] **Advanced Gamification & Referral Hub**:
+  - Interactive Pet Points dashboard with animated progress bar to next Tier (*Bronze, Silver, Gold, Platinum*).
+  - Achievement badge unlock screen with celebration animations.
+  - Daily check-in streak calendar with bonus multipliers.
+  - Referral Center: Native share sheet, live invite status tracker, and points claim button.
+  - City-wide and community leaderboards with top-pet avatars.
 - [ ] **Specialized Vendor Tools**:
   - Veterinarian: Medical records UI, vaccination schedules, digital prescriptions, treatment notes, PDF uploader
   - Groomer: Before/After comparison gallery, grooming package configurator, dynamic pricing tiers
@@ -101,18 +124,20 @@ This document outlines the current engineering status versus the full technical 
 
 ### Group 3: Web Ecosystem & Admin Panel Development
 **Tracking Issue**: [GitHub Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40)  
-**Primary Reference**: PDF Pages 4, 11, 17, 26–29
+**Primary Reference**: PDF Pages 4, 11, 13, 17, 26–29
 
 - [ ] **Next.js Public Web Platform**:
   - Landing page with dynamic search, metrics counter, and app download CTAs
-  - About PetSewa, services directory, and vendor discovery with city filters
+  - Public NGO donation directory and transparency case showcase
   - Technical SEO setup (SSR/SSG, JSON-LD schema, dynamic Open Graph meta tags, sitemap.xml)
-  - E-Commerce web store (Catalog, faceted search, cart, checkout, payment, order tracking)
+  - E-Commerce web store (Catalog, cart, checkout, payment, order tracking)
   - Lost & Found portal with interactive map marker picker and public listings
   - Adoption portal with pet profiles, digital adoption questionnaire, and application status tracking
   - Vendor & partner onboarding portal with multi-step registration and document upload
 - [ ] **Laravel Admin Panel & Operational CMS**:
   - Central dashboard with executive KPIs, revenue analytics, and system health alerts
+  - NGO campaign verification, donation tracking, and fund release approvals
+  - Gamification & rewards configuration (Points rules, tier thresholds, badge manager)
   - User and vendor management directory with account status controls
   - KYC document verification tool with approve/reject workflows
   - Granular Role-Based Access Control (Super Admin, Operations, Finance, Support, Moderation)
@@ -124,7 +149,7 @@ This document outlines the current engineering status versus the full technical 
 
 ## 4. Execution Roadmap
 
-1. **Sprint 1 — Core Data Layer & Real-time Gateway (Group 1)**: Deploy PostgreSQL TypeORM migrations, JWT/RBAC auth, and Socket.io gateway.
-2. **Sprint 2 — Mobile Social, Community & Specialized Tools (Group 2)**: Deliver Flutter social feed, reels, and provider operational dashboards.
+1. **Sprint 1 — Core Data Layer, NGO/Rewards & Real-time Gateway (Group 1)**: Deploy PostgreSQL TypeORM migrations, JWT/RBAC auth, NGO & Gamification APIs, and Socket.io gateway.
+2. **Sprint 2 — Mobile Social, Community, NGO Hub & Specialized Tools (Group 2)**: Deliver Flutter social feed, reels, donation hub, rewards center, and provider operational dashboards.
 3. **Sprint 3 — Web Portals & Operational Admin CMS (Group 3)**: Launch Next.js public platform and Laravel administration panel.
 4. **Sprint 4 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, and load testing.
