@@ -2,6 +2,8 @@
 
 Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
 
+- **Target Delivery Deadline**: Monday, August 17, 2026 (EOD)
+
 This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It explicitly documents all existing implementations in the codebase and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
 
 ---
