@@ -153,3 +153,4 @@ This document outlines the current engineering status versus the full technical 
 2. **Sprint 2 — Mobile Social, Community, NGO Hub & Specialized Tools (Group 2)**: Deliver Flutter social feed, reels, donation hub, rewards center, and provider operational dashboards.
 3. **Sprint 3 — Web Portals & Operational Admin CMS (Group 3)**: Launch Next.js public platform and Laravel administration panel.
 4. **Sprint 4 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, and load testing.
+5. **Final Deliverable — Comprehensive Engineering Documentation**: Each group must produce and commit dedicated architecture, API/Screen specifications, setup guides, and test verification reports under `doc/`.
