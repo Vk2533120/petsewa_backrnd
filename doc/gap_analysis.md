@@ -2,7 +2,7 @@
 
 Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
 
-This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It documents existing foundational implementations and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
+This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It explicitly documents all existing implementations in the codebase and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
 
 ---
 
@@ -10,18 +10,49 @@ This document outlines the current engineering status versus the full technical 
 
 | Component | Architecture Stack | Current Status | Master Issue |
 |---|---|---|---|
-| **Backend & Core API Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO exist; advancing to complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
-| **Cross-Platform Mobile App** | Flutter 3.x, Dart, Supabase | Baseline screens for auth, booking, shop, NGO hub, referral, and wallet implemented. Advancing with specialized provider tools, social feed, reels, recurring NGO donations, gamification animations, and real-time Socket.io chat/SOS. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Backend & Core API Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO are implemented; advancing with complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
+| **Cross-Platform Mobile App** | Flutter 3.x, Dart, Supabase | 37+ production screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, and real-time Socket.io chat/SOS. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
 | **Web Ecosystem & Admin CMS** | Next.js, React, Tailwind, Laravel Admin | Architectural specifications finalized for public marketing, web store, adoption/lost-and-found portals, NGO transparency showcases, and operational admin CMS. | [Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40) |
 
 ---
 
-## 2. Completed Milestones & Existing Code Foundation
+## 2. Exhaustive Audit: What is Already Done in Codebase
 
-- [x] **Framework Security & Modernization**: Backend upgraded to NestJS 11 with 0 security vulnerabilities (`npm run build` passing).
-- [x] **Rewards & Gamification Foundation**: Implemented `RewardsService` with 4-tier level progression (*Bronze, Silver, Gold, Platinum*), streak-based daily check-ins, referral code generation (`PET-<id>-<random>`), point award logic, and voucher redemption.
-- [x] **NGO & Fundraising Foundation**: Implemented `NgoService` with campaign creation, active campaign retrieval, and donation accumulation logic.
-- [x] **Flutter Core Screens**: Implemented `ngo_hub_screen.dart`, `ngo_detail_screen.dart`, `ngo_dashboard_screen.dart`, `referral_screen.dart`, and `wallet_screen.dart`.
+### A. NestJS Backend Engine (`petsewa-backend`)
+- [x] **Framework Modernization**: Upgraded to NestJS 11 with 0 security vulnerabilities (`npm run build` passing).
+- [x] **NGO Module (`src/modules/ngo`)**:
+  - `Campaign` entity with TypeORM (`id`, `title`, `ngoName`, `description`, `targetAmount`, `raisedAmount`, `isActive`).
+  - `NgoService` with `createCampaign()`, `getActiveCampaigns()`, and `processDonation()`.
+  - `NgoController` exposing `POST /ngo/campaigns`, `GET /ngo/campaigns`, and `PATCH /ngo/campaigns/:id/donate`.
+- [x] **Rewards & Gamification Module (`src/modules/rewards`)**:
+  - `Reward`, `RewardTransaction`, `Coupon` TypeORM entities.
+  - `RewardsService` with 4-tier level thresholds (*Bronze < 200, Silver >= 200, Gold >= 500, Platinum >= 1000*).
+  - 7-day daily check-in streak calculation with escalating bonus rewards.
+  - Referral code generator (`PET-<userId>-<random>`) awarding +100 points to referrer and +50 points to referee.
+  - Points ledger transaction logging and discount coupon redemption (`PET-VO-...`).
+- [x] **Modular Structure**: Base module directories and DTO validation pipes for `auth`, `vendors`, `bookings`, `ecommerce`, `emergency`, `lostfound`, `adoption`, `ngo`, `rewards`, `social`, `notifications`.
+
+### B. Flutter Mobile App (`petsewa_app`)
+- [x] **NGO Hub & Adoption Suite (6 Dedicated Screens + Service)**:
+  - `ngo_hub_screen.dart`: Tabbed interface to browse approved NGOs and adoptable rescued pets.
+  - `ngo_detail_screen.dart`: NGO public profile, registration info, mission, and listed pets.
+  - `ngo_dashboard_screen.dart`: NGO shelter management portal with incoming adoption requests.
+  - `ngo_registration_screen.dart`: Multi-field NGO onboarding form.
+  - `ngo_pending_screen.dart`: Verification pending status screen.
+  - `ngo_add_pet_screen.dart`: Form for NGOs to list new rescue animals.
+  - `ngo_service.dart`: Client API service for NGO registration, login, pet management, adoption requests (`sendAdoptionRequest`, `acceptRequest`, `rejectRequest`, `scheduleMeet`, `markAdopted`), and campaigns.
+  - `adoption_screen.dart`, `adoption_request_screen.dart`, and `my_adoption_requests_screen.dart`.
+- [x] **Rewards, Referrals & Wallet Suite**:
+  - `referral_screen.dart`: Native referral code share sheet, invite metrics, and rewards dashboard.
+  - `wallet_screen.dart`: Pet Points balance, transaction history, and coupon vouchers.
+- [x] **Core Customer & Booking Screens**:
+  - Authentication: `login_screen.dart`, `register_screen.dart`, `otp_screen.dart`, `onboarding_screen.dart`, `splash_screen.dart`.
+  - Profile & Pets: `customer_home.dart`, `profile_screen.dart`, `create_pet_profile_screen.dart`, `edit_pet_profile_screen.dart`.
+  - Services & Bookings: `service_discovery_screen.dart`, `service_details_screen.dart`, `booking_flow_screen.dart`, `booking_success_screen.dart`, `my_bookings_screen.dart`.
+  - Shop & Cart: `shop_screen.dart`, `product_details_screen.dart`, `cart_screen.dart`.
+  - Portals: `lost_found_screen.dart`, `emergency_screen.dart`.
+- [x] **Provider Baseline Screens**:
+  - `provider_home_screen.dart`, `provider_register_screen.dart`, `provider_service_select_screen.dart`, `provider_verification_screen.dart`, `provider_pending_screen.dart`.
 - [x] **Repository Governance & CI**: Automated CI build pipeline, CODEOWNERS, and Feature/Architecture Proposal workflow active.
 
 ---
@@ -32,6 +63,13 @@ This document outlines the current engineering status versus the full technical 
 **Tracking Issue**: [GitHub Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
+#### Completed Foundation (In Codebase)
+- Base entity files created for `User`, `Campaign`, `Reward`, `RewardTransaction`, `Coupon`.
+- Active `RewardsService` with 4-tier level progression, daily streak calculations, referral code generator (`PET-<id>-<random>`), point awards, and coupon redemption.
+- Active `NgoService` with campaign creation, active campaign queries, and donation accumulation logic.
+- NestJS 11 framework upgrade completed with 0 dependencies audit vulnerabilities.
+
+#### Required Advanced Implementation (To be Built)
 - [ ] **Advanced Database & TypeORM Schema Layer**:
   - `User`, `Vendor`, `UserAddress`, `RefreshToken`, `Role` (RBAC)
   - `Pet`, `MedicalRecord`, `VaccinationRecord`
@@ -81,6 +119,11 @@ This document outlines the current engineering status versus the full technical 
 **Tracking Issue**: [GitHub Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
+#### Completed Foundation (In Codebase)
+- Base UI screens created: `ngo_hub_screen.dart`, `ngo_detail_screen.dart`, `ngo_dashboard_screen.dart`, `ngo_registration_screen.dart`, `ngo_pending_screen.dart`, `ngo_add_pet_screen.dart`, `adoption_screen.dart`, `adoption_request_screen.dart`, `my_adoption_requests_screen.dart`, `referral_screen.dart`, and `wallet_screen.dart`.
+- Active `NgoService` in Flutter supporting registration, login, pet management, adoption workflow state management, and campaigns.
+
+#### Required Advanced Implementation (To be Built)
 - [ ] **Advanced NGO & Fundraising Hub**:
   - Interactive campaign progress bars with real-time donor feed.
   - One-tap donation checkout supporting UPI, Cards, and Net Banking.
@@ -126,6 +169,7 @@ This document outlines the current engineering status versus the full technical 
 **Tracking Issue**: [GitHub Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
+#### Required Advanced Implementation (To be Built)
 - [ ] **Next.js Public Web Platform**:
   - Landing page with dynamic search, metrics counter, and app download CTAs
   - Public NGO donation directory and transparency case showcase
