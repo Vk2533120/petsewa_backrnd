@@ -1,6 +1,6 @@
 # PetSewa Ecosystem Platform — Gap Analysis and Engineering Status
 
-Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf` (Pages 13, 14–15, 18–19)
+Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
 
 This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It documents existing foundational implementations and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
 
@@ -26,11 +26,11 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
-## 3. Advanced Engineering Work Streams
+## 3. Active Work Streams & Group Breakdown
 
 ### Group 1: Backend and Infrastructure Engineering
 **Tracking Issue**: [GitHub Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38)  
-**Primary Reference**: PDF Pages 2–4, 8–11, 13–15, 16–19
+**Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
 - [ ] **Advanced Database & TypeORM Schema Layer**:
   - `User`, `Vendor`, `UserAddress`, `RefreshToken`, `Role` (RBAC)
@@ -79,7 +79,7 @@ This document outlines the current engineering status versus the full technical 
 
 ### Group 2: Flutter Mobile App Development
 **Tracking Issue**: [GitHub Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39)  
-**Primary Reference**: PDF Pages 2, 3, 8–9, 11, 13–16
+**Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
 - [ ] **Advanced NGO & Fundraising Hub**:
   - Interactive campaign progress bars with real-time donor feed.
@@ -124,7 +124,7 @@ This document outlines the current engineering status versus the full technical 
 
 ### Group 3: Web Ecosystem & Admin Panel Development
 **Tracking Issue**: [GitHub Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40)  
-**Primary Reference**: PDF Pages 4, 11, 13, 17, 26–29
+**Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
 
 - [ ] **Next.js Public Web Platform**:
   - Landing page with dynamic search, metrics counter, and app download CTAs
