@@ -89,8 +89,13 @@ jobs:
             const targetNumber = target.number;
             const assignees = target.assignees || [];
 
-            // Authorized Core / Admin / Moderator Members ONLY
-            const authorizedCore = ['pathakaanya12', 'hammaduddin561', 'yantrikminds', 'petsewa'];
+            // Authorized Core, Leadership, and Engineering Group Members
+            const authorizedCore = [
+              'pathakaanya12', 'hammaduddin561', 'yantrikminds', 'petsewa',
+              'sobiya-25', 'sriramofficialsit',
+              'sujalparab7', 'auc125au', 'user-payal',
+              'janvi1bhardwaj', 'yogita-1206'
+            ];
 
             for (const assignee of assignees) {
               const username = assignee.login.toLowerCase();
