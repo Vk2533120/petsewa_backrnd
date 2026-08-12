@@ -13,7 +13,7 @@ This document outlines the current engineering status versus the full technical 
 | Component | Architecture Stack | Current Status | Master Issue |
 |---|---|---|---|
 | **Backend & Infrastructure Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO are implemented; advancing with complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
-| **Mobile App & Web Admin Panel** | Flutter 3.x, Dart, Flutter Web / Web Platform, Supabase | 37+ production screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, real-time Socket.io chat/SOS, and the **complete Desktop Web Admin Panel** (Operations KPIs, KYC verification console, Payout approvals, User governance, Content moderation, CMS). | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Mobile App & Web Admin Panel** | Flutter 3.x (Mobile: Android & iOS) + Laravel 11 / Filament (Desktop Web Admin CMS) | 37+ production mobile screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, real-time Socket.io chat/SOS, and the **complete Desktop Web Admin Panel** built with **Laravel 11 / Filament** (Operations KPIs, KYC verification console, Payout approvals, User governance, Content moderation, CMS). | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
 
 ---
 
@@ -127,7 +127,7 @@ This document outlines the current engineering status versus the full technical 
 - Active `NgoService` in Flutter supporting registration, login, pet management, adoption workflow state management, and campaigns.
 
 #### Required Advanced Implementation (To be Built)
-- [ ] **Dedicated Desktop Web Admin Panel (Flutter Web / Web Platform)**:
+- [ ] **Dedicated Desktop Web Admin Panel (Laravel 11 / Filament)**:
   - Central Operations Dashboard (Executive KPI metrics, revenue performance analytics, system health alerts).
   - Vendor KYC Document Verification Console (Side-by-side high-resolution document viewer with 1-click Approve & Activate / Reject with reason).
   - User & Account Governance Console (Instant search directory, profile & booking history inspection, ban/suspend controls).
@@ -136,36 +136,36 @@ This document outlines the current engineering status versus the full technical 
   - Content Moderation & Safety Console (Flagged posts/reels/comments queue, one-tap content takedown & warning triggers).
   - CMS & Promotional Banner Manager (Homepage carousel banner upload, target link action router, featured curation).
   - Role-Based Access Control (RBAC) UI and protected routing for administrative roles.
-- [ ] **Specialized Vendor Tools (Mobile App)**:
+- [ ] **Specialized Vendor Tools (Flutter Mobile App)**:
   - Veterinarian: Medical records UI, vaccination schedules, digital prescriptions, treatment notes, PDF uploader
   - Groomer: Before/After comparison gallery, grooming package configurator, dynamic pricing tiers
   - Trainer: Session scheduler, curriculum plans, progress reports, behavior tracking logs
   - Boarding / Hostel: Room management, real-time occupancy grid, check-in/check-out checklist, medication logs
   - Dog Walker: Walk scheduling, acceptance alerts, live GPS route map, post-walk summary report
-- [ ] **Advanced NGO & Fundraising Hub (Mobile App)**:
+- [ ] **Advanced NGO & Fundraising Hub (Flutter Mobile App)**:
   - Interactive campaign progress bars with real-time donor feed.
   - One-tap donation checkout supporting UPI, Cards, and Net Banking.
   - Transparent fund utilization gallery (before/after rescue photos and medical invoices).
   - 80G tax receipt instant PDF download UI.
   - Recurring monthly shelter support pledge manager.
-- [ ] **Advanced Gamification & Referral Hub (Mobile App)**:
+- [ ] **Advanced Gamification & Referral Hub (Flutter Mobile App)**:
   - Interactive Pet Points dashboard with animated progress bar to next Tier (*Bronze, Silver, Gold, Platinum*).
   - Achievement badge unlock screen with celebration animations.
   - Daily check-in streak calendar with bonus multipliers.
   - Referral Center: Native share sheet, live invite status tracker, and points claim button.
   - City-wide and community leaderboards with top-pet avatars.
-- [ ] **Social Media Feed & Reels (Mobile App)**:
+- [ ] **Social Media Feed & Reels (Flutter Mobile App)**:
   - Feed screen supporting image, video, and text posts with likes, comments, shares, saves, and hashtag discovery.
   - Full-screen vertical swipeable Reels video player with auto-play, double-tap like, and comments modal.
   - In-app video recording, video trimming tool, thumbnail frame selector, and upload progress bar.
-- [ ] **Community Groups (Mobile App)**:
+- [ ] **Community Groups (Flutter Mobile App)**:
   - Category directory (Dog, Cat, Breed-specific, Rescue, Adoption communities).
   - Discussion threads, interactive polls with live percentages, and meetup events with RSVP.
-- [ ] **Real-time Communication & Emergency SOS (Mobile App)**:
+- [ ] **Real-time Communication & Emergency SOS (Flutter Mobile App)**:
   - 1-to-1 live chat screen with read receipts and typing indicators.
   - Live GPS service tracking map view.
   - Emergency SOS trigger button, symptom selector, nearby vet radar search, and immediate live room.
-- [ ] **Mobile E-Commerce (Mobile App)**:
+- [ ] **Mobile E-Commerce (Flutter Mobile App)**:
   - Wishlist screen with move-to-cart action.
   - Order details with live status tracking stepper and tabbed order history.
   - Return & refund dispute submission flow with photo evidence.
@@ -175,6 +175,6 @@ This document outlines the current engineering status versus the full technical 
 ## 4. Execution Roadmap
 
 1. **Sprint 1 — Core Data Layer, NGO/Rewards & Real-time Gateway (Group 1)**: Deploy PostgreSQL TypeORM migrations, JWT/RBAC auth, NGO & Gamification APIs, and Socket.io gateway.
-2. **Sprint 2 — Mobile Customer & Provider Apps + Web Admin Panel (Group 2)**: Deliver Flutter mobile app, specialized provider dashboards, social feed, reels, donation hub, rewards center, and the dedicated Desktop Web Admin Panel.
-3. **Sprint 3 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, load testing, and security audits.
+2. **Sprint 2 — Mobile Apps & Laravel Web Admin Panel (Group 2)**: Deliver Flutter mobile app, specialized provider dashboards, social feed, reels, donation hub, rewards center, and the dedicated Laravel 11 Web Admin Panel.
+3. **Sprint 3 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, and load testing.
 4. **Final Deliverable — Comprehensive Engineering Documentation**: Each group must produce and commit dedicated architecture, API/Screen specifications, setup guides, and test verification reports under `doc/`.
