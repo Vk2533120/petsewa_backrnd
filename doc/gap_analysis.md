@@ -8,16 +8,54 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
-## 1. Platform Implementation Overview
+## 1. Platform Implementation & Technology Stack Overview
 
-| Component | Architecture Stack | Current Status | Master Issue |
+| Component | Official Architecture Stack (From Proposal PDF) | Current Status | Master Issue |
 |---|---|---|---|
-| **Backend & Infrastructure Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO are implemented; advancing with complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
-| **Mobile App & Web Admin Panel** | Flutter 3.x (Mobile: Android & iOS) + Laravel 11 / Filament (Desktop Web Admin CMS) | 37+ production mobile screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, real-time Socket.io chat/SOS, and the **complete Desktop Web Admin Panel** built with **Laravel 11 / Filament** (Operations KPIs, KYC verification console, Payout approvals, User governance, Content moderation, CMS). | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Backend & Infrastructure Engine** | **NestJS 11** (Node.js, TypeScript), **PostgreSQL** (PostGIS), **TypeORM**, **Redis** (Cache/Geo), **Socket.io** (Redis Adapter), **BullMQ** (Queues), **Cloudflare R2 / AWS S3**, **Razorpay / Stripe / UPI** | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO are implemented; advancing with complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
+| **Mobile App & Web Admin Panel** | **Flutter 3.x / Dart** (Mobile: Android & iOS, Provider/Riverpod, Dio, Hive, Google Maps, Lottie, FCM) + **Laravel 11 / Filament / PHP 8.2+** (Desktop Web Admin CMS, Spatie RBAC, DomPDF, Excel Exports) | 37+ production mobile screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, real-time Socket.io chat/SOS, and the **complete Desktop Web Admin Panel** built with **Laravel 11 / Filament** (Operations KPIs, KYC verification console, Payout approvals, User governance, Content moderation, CMS). | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Public Web Platform** | **Next.js** (React, TypeScript, Tailwind CSS, SSR/SSG, Technical SEO) | Postponed for upcoming phase to prioritize Core Backend, Infrastructure, and Customer/Vendor/Admin ecosystem. | *Phase 2 Only* |
 
 ---
 
-## 2. Exhaustive Audit: What is Already Done in Codebase
+## 2. Exhaustive Technology Stack Breakdown (Per PDF Proposal)
+
+### A. Group 1: Backend & Infrastructure Engineering
+- **Runtime & Framework**: Node.js, TypeScript, NestJS 11
+- **Primary Database**: PostgreSQL with PostGIS extension for spatial queries
+- **ORM & Migrations**: TypeORM
+- **In-Memory Cache & Message Broker**: Redis (Key-value caching, Pub/Sub, `GEOSEARCH` proximity queries, session store)
+- **Real-Time Communication Gateway**: Socket.io (with Redis Adapter cluster support)
+- **Background Worker Queues**: BullMQ (FCM push notifications, SMS/Email queues, video thumbnail processing, ledger reconciliation)
+- **Cloud Object Storage & CDN**: Cloudflare R2 / AWS S3 (WebP image compression, chunked video uploads, signed temporary URLs for medical PDFs)
+- **Payments & Webhooks**: Razorpay, Stripe, UPI Intent Webhooks (cryptographic signature verification & idempotency)
+- **Authentication & Security**: JWT (Access Token + Refresh Token rotation), Redis OTP (300s TTL), `@Roles()` RBAC Guards, Helmet, Rate Limiting, bcrypt password hashing
+- **API Documentation**: Swagger / OpenAPI 3.0 (`/api/docs`)
+
+### B. Group 2: Mobile Application & Web Admin Panel
+#### 1. Cross-Platform Mobile Application (Android & iOS)
+- **Framework & Language**: Flutter 3.x / Dart
+- **State Management**: Provider / Riverpod / Bloc
+- **Local Storage & Session Cache**: Hive / SharedPreferences / flutter_secure_storage
+- **Networking & API Client**: Dio / Http (with JWT Bearer interceptor & refresh token retry flow)
+- **Real-Time WebSockets**: `socket_io_client`
+- **Maps & Geolocation**: `google_maps_flutter`, `geolocator`, `geocoding` (for live GPS route tracking & SOS radius radar)
+- **Media & Video Player**: `video_player`, `chewie`, `image_picker`, `camera` (for Reels vertical feed & post creator)
+- **Push Notifications**: Firebase Cloud Messaging (`firebase_messaging`), `flutter_local_notifications`
+- **PDF Generation & Viewer**: `pdf`, `printing`, `flutter_pdfview` (for 80G tax receipts, digital prescriptions, vaccination records)
+- **Micro-Animations**: `lottie` (for milestone badge unlock celebrations & gamification streaks)
+
+#### 2. Dedicated Desktop Web Admin Panel
+- **Framework & Runtime**: Laravel 11 / PHP 8.2+
+- **Admin UI Ecosystem**: Filament Admin / Laravel Blade
+- **Database Engine**: Direct connection to PostgreSQL database
+- **Access Control & Permissions**: Spatie Laravel-Permission (5-Tier RBAC: SuperAdmin, Operations, Finance, Support, Moderator)
+- **Reporting & Data Exports**: Laravel Excel (`maatwebsite/excel`) & DomPDF / Snappy (for CSV & PDF financial ledgers)
+- **Audit Logging**: `owen-it/laravel-auditing` (for immutable `AdminAuditLog`)
+
+---
+
+## 3. Exhaustive Audit: What is Already Done in Codebase
 
 ### A. NestJS Backend Engine (`petsewa-backend`)
 - [x] **Framework Modernization**: Upgraded to NestJS 11 with 0 security vulnerabilities (`npm run build` passing).
@@ -58,7 +96,7 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
-## 3. Active Work Streams & Group Breakdown
+## 4. Active Work Streams & Group Breakdown
 
 ### Group 1: Backend & Infrastructure Engineering
 **Tracking Issue**: [GitHub Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38)  
@@ -172,7 +210,7 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
-## 4. Execution Roadmap
+## 5. Execution Roadmap
 
 1. **Sprint 1 — Core Data Layer, NGO/Rewards & Real-time Gateway (Group 1)**: Deploy PostgreSQL TypeORM migrations, JWT/RBAC auth, NGO & Gamification APIs, and Socket.io gateway.
 2. **Sprint 2 — Mobile Apps & Laravel Web Admin Panel (Group 2)**: Deliver Flutter mobile app, specialized provider dashboards, social feed, reels, donation hub, rewards center, and the dedicated Laravel 11 Web Admin Panel.
