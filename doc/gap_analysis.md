@@ -2,7 +2,7 @@
 
 Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
 
-- **Target Delivery Deadline**: Monday, August 17, 2026 (EOD)
+- **Target Delivery Deadline (Sprint 1)**: Monday, August 17, 2026 (EOD)
 
 This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It explicitly documents all existing implementations in the codebase and specifies the advanced extensions required for production deployment across active GitHub tracking tasks.
 
@@ -13,8 +13,8 @@ This document outlines the current engineering status versus the full technical 
 | Component | Architecture Stack | Current Status | Master Issue |
 |---|---|---|---|
 | **Backend & Infrastructure Engine** | NestJS 11, PostgreSQL, TypeORM, Redis, Socket.io, Cloudflare R2 | Modernized to NestJS 11 (0 vulnerabilities, clean build). Core module services for Rewards, Referrals, and NGO are implemented; advancing with complete TypeORM relational migrations, automated 80G tax receipt PDF engine, multi-tier leaderboards, real-time gateway, and payment/commission infrastructure. | [Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38) |
-| **Mobile App & Admin Operations Panel** | Flutter 3.x, Dart, Supabase | 37+ production screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, full in-app Admin & Operations management console (Flutter Web ready), social feed, reels, recurring NGO pledges, gamification celebration animations, and real-time Socket.io chat/SOS. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
-| **Web Ecosystem** | Next.js, React, Tailwind | Postponed for upcoming phase to prioritize Core Backend, Infrastructure, and Customer/Vendor/Admin Mobile ecosystem. | *Postponed* |
+| **Customer & Vendor Mobile App** | Flutter 3.x, Dart, Supabase | 37+ production screens implemented (Auth, Pet Profiles, Bookings, Shop, NGO Hub, Adoption Workflow, Referral, Wallet, Provider baseline). Advancing with specialized provider operational tools, social feed, reels, recurring NGO pledges, gamification celebration animations, and real-time Socket.io chat/SOS. *(Admin Panel strictly excluded from mobile app)*. | [Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39) |
+| **Web Admin Panel & Web Portals** | Laravel Admin / Next.js, React, Tailwind | Dedicated desktop Web Admin Panel (KYC verification, payout queue, financial reports, user governance, content moderation, CMS) and public web portals. | [Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40) |
 
 ---
 
@@ -118,25 +118,18 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
-### Group 2: Flutter Mobile App & Admin Operations Panel
+### Group 2: Flutter Mobile App Development
 **Tracking Issue**: [GitHub Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`  
 **Target Deadline**: Monday, August 17, 2026 (EOD)
+
+*(Note: Admin Panel is strictly excluded from the mobile app and is dedicated to the Web platform).*
 
 #### Completed Foundation (In Codebase)
 - Base UI screens created: `ngo_hub_screen.dart`, `ngo_detail_screen.dart`, `ngo_dashboard_screen.dart`, `ngo_registration_screen.dart`, `ngo_pending_screen.dart`, `ngo_add_pet_screen.dart`, `adoption_screen.dart`, `adoption_request_screen.dart`, `my_adoption_requests_screen.dart`, `referral_screen.dart`, and `wallet_screen.dart`.
 - Active `NgoService` in Flutter supporting registration, login, pet management, adoption workflow state management, and campaigns.
 
 #### Required Advanced Implementation (To be Built)
-- [ ] **Admin & Operations Management Panel (In-App & Flutter Web)**:
-  - Central Operations Dashboard (Executive KPI cards, daily/weekly revenue performance charts, action alert badges)
-  - Vendor KYC Verification Console (Document inspection viewer with zoom, 1-click Approve & Activate / Reject with reason)
-  - User & Account Governance Console (Instant search directory, profile & booking history inspection, ban/suspend controls)
-  - Financial & Payout Console (Vendor withdrawal request queue, bank verification, approve payout with UTR input)
-  - NGO & Rescue Campaign Governance (80G certificate review, emergency rescue drive approval, fund release audit)
-  - Content Moderation & Safety (Flagged posts/reels/comments queue, one-tap content takedown & warning triggers)
-  - CMS & Hero Banner Manager (Carousel banner upload, target link action router, featured doctor/salon curator)
-  - Role-Based Access Control (RBAC) UI and protected navigation routing
 - [ ] **Specialized Vendor Tools**:
   - Veterinarian: Medical records UI, vaccination schedules, digital prescriptions, treatment notes, PDF uploader
   - Groomer: Before/After comparison gallery, grooming package configurator, dynamic pricing tiers
@@ -178,9 +171,26 @@ This document outlines the current engineering status versus the full technical 
 
 ---
 
+### Web Admin Panel & Web Platform (Dedicated Web Scope)
+**Tracking Issue**: [GitHub Issue #40](https://github.com/PetSewa-India/petsewa_app/issues/40)  
+**Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`
+
+- [ ] **Desktop Web Admin Panel (Laravel / Next.js)**:
+  - Central operations dashboard with executive KPIs, revenue analytics, and system health alerts
+  - Vendor KYC document verification tool with side-by-side full-screen inspection
+  - User and account governance console (Directory search, status management, ban/unban)
+  - Financial & payout management console (Vendor withdrawal queue, bank verification, ledger audit)
+  - NGO verification queue & emergency campaign approval workflow
+  - Content moderation queues for flagged posts, reels, comments, and user dispute reports
+  - CMS management (Promotional banners, hero sliders, featured vendors/products)
+  - Granular Role-Based Access Control (Super Admin, Operations, Finance, Support, Moderation)
+
+---
+
 ## 4. Execution Roadmap
 
 1. **Sprint 1 — Core Data Layer, NGO/Rewards & Real-time Gateway (Group 1)**: Deploy PostgreSQL TypeORM migrations, JWT/RBAC auth, NGO & Gamification APIs, and Socket.io gateway.
-2. **Sprint 2 — Mobile Social, Community, Admin Panel & Specialized Tools (Group 2)**: Deliver Flutter social feed, reels, donation hub, rewards center, in-app Admin & Operations management panel, and provider operational dashboards.
-3. **Sprint 3 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, and load testing.
-4. **Final Deliverable — Comprehensive Engineering Documentation**: Each group must produce and commit dedicated architecture, API/Screen specifications, setup guides, and test verification reports under `doc/`.
+2. **Sprint 2 — Mobile Social, Community, NGO Hub & Specialized Tools (Group 2)**: Deliver Flutter customer & vendor mobile apps, social feed, reels, donation hub, rewards center, and provider operational dashboards.
+3. **Sprint 3 — Web Admin Panel & Portals**: Launch dedicated desktop Web Admin Panel (Laravel/Next.js) and public web portals.
+4. **Sprint 4 — End-to-End Integration & Production Hardening**: Multi-gateway payment testing, live GPS tracking verification, and load testing.
+5. **Final Deliverable — Comprehensive Engineering Documentation**: Each group must produce and commit dedicated architecture, API/Screen specifications, setup guides, and test verification reports under `doc/`.
