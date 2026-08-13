@@ -94,7 +94,7 @@ jobs:
               'pathakaanya12', 'hammaduddin561', 'yantrikminds', 'petsewa',
               'sobiya-25', 'sriramofficialsit',
               'sujalparab7', 'auc125au', 'user-payal',
-              'janvi1bhardwaj', 'yogita-1206', 'sowmiyavksl-ops'
+              'janvi1bhardwaj', 'yogita-1206'
             ];
 
             for (const assignee of assignees) {
