@@ -8,6 +8,28 @@ on:
 
 jobs:
   # -------------------------------------------------------------
+  # Job 0: Enforce Main Branch Protection & Core Authorization
+  # -------------------------------------------------------------
+  branch-guard:
+    name: Verify Main Branch Authorization
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Validate Committer Against Core Team
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const actor = context.actor.toLowerCase();
+            const authorizedCore = ['pathakaanya12', 'hammaduddin561', 'yantrikminds', 'petsewa'];
+            
+            console.log(`Checking push authorization for actor: ${context.actor}`);
+            if (!authorizedCore.includes(actor)) {
+              core.setFailed(`🚫 ACCESS DENIED: User '${context.actor}' is NOT authorized to push directly to 'main'! Only Core Administrators (${authorizedCore.join(', ')}) have direct main permissions. All developers must work on a feature branch and submit a Pull Request.`);
+            } else {
+              console.log(`✅ Push authorized for core administrator: ${context.actor}`);
+            }
+
+  # -------------------------------------------------------------
   # Job 1: Build NestJS Core Backend API
   # -------------------------------------------------------------
   backend-ci:
