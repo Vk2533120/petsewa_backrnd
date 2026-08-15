@@ -2,7 +2,7 @@
 
 Reference Document: `doc/Pet Care Ecosystem Platform (3).pdf`
 
-- **Target Delivery Deadline (Sprint 1)**: Monday, August 17, 2026 (EOD)
+- **Target Delivery Deadline (Sprint 1)**: Wednesday, August 19, 2026 (EOD)
 
 This document outlines the current engineering status versus the full technical scope defined in the PetSewa platform architecture proposal. It explicitly documents all existing implementations in the codebase and specifies the active work streams assigned to Group 1 and Group 2.
 
@@ -101,7 +101,7 @@ This document outlines the current engineering status versus the full technical 
 ### Group 1: Backend & Infrastructure Engineering
 **Tracking Issue**: [GitHub Issue #38](https://github.com/PetSewa-India/petsewa_app/issues/38)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`  
-**Target Deadline**: Monday, August 17, 2026 (EOD)
+**Target Deadline**: Wednesday, August 19, 2026 (EOD)
 
 #### Completed Foundation (In Codebase)
 - Base entity files created for `User`, `Campaign`, `Reward`, `RewardTransaction`, `Coupon`.
@@ -158,7 +158,7 @@ This document outlines the current engineering status versus the full technical 
 ### Group 2: Mobile App & Web Admin Panel Development
 **Tracking Issue**: [GitHub Issue #39](https://github.com/PetSewa-India/petsewa_app/issues/39)  
 **Primary Reference**: `doc/Pet Care Ecosystem Platform (3).pdf`  
-**Target Deadline**: Monday, August 17, 2026 (EOD)
+**Target Deadline**: Wednesday, August 19, 2026 (EOD)
 
 #### Completed Foundation (In Codebase)
 - Base UI screens created: `ngo_hub_screen.dart`, `ngo_detail_screen.dart`, `ngo_dashboard_screen.dart`, `ngo_registration_screen.dart`, `ngo_pending_screen.dart`, `ngo_add_pet_screen.dart`, `adoption_screen.dart`, `adoption_request_screen.dart`, `my_adoption_requests_screen.dart`, `referral_screen.dart`, and `wallet_screen.dart`.
