@@ -1,0 +1,48 @@
+name: SonarQube Cloud Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - development
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  sonarcloud:
+    name: SonarQube Cloud Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history is required for accurate SonarQube blame and issue detection
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: './petsewa-backend/package.json'
+
+      - name: Install Backend Dependencies & Generate Coverage
+        working-directory: ./petsewa-backend
+        run: |
+          npm ci || npm install
+          npm run test:cov || npm test || true
+
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=PetSewa-India_petsewa_app
+            -Dsonar.organization=petsewa-india
