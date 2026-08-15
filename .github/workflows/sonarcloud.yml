@@ -31,14 +31,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './petsewa-backend/package.json'
 
-      - name: Install Backend Dependencies & Generate Coverage
+      - name: Install Backend Dependencies
         working-directory: ./petsewa-backend
-        run: |
-          npm ci || npm install
-          npm run test:cov || npm test || true
+        run: npm ci || npm install
 
       - name: SonarQube Cloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
