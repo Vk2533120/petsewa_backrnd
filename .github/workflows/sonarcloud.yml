@@ -35,6 +35,10 @@ jobs:
         working-directory: ./petsewa-backend
         run: npm ci || npm install
 
+      - name: Run Backend Test Coverage
+        working-directory: ./petsewa-backend
+        run: npx jest --coverage || true
+
       - name: SonarQube Cloud Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
